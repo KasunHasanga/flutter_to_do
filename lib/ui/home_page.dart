@@ -1,8 +1,13 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+
 import 'package:to_do_app/services/notification_services.dart';
 import 'package:to_do_app/services/theme_services.dart';
+import 'package:to_do_app/ui/theme.dart';
+import 'package:to_do_app/ui/widgets/buttons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DateTime _selectedDate = DateTime.now();
   var notifyHelper;
   @override
   void initState() {
@@ -26,10 +32,61 @@ class _HomePageState extends State<HomePage> {
       appBar: _appBar(),
       body: Column(
         children: [
-          Text(
-            "Theme data",
-            style: TextStyle(fontSize: 20),
+          _addTaskBar(),
+          Container(
+            margin: const EdgeInsets.only(top: 20, left: 20, right: 10),
+            child: DatePicker(
+              DateTime.now(),
+              height: 100,
+              width: 80,
+              initialSelectedDate: DateTime.now(),
+              selectionColor: primryClr,
+              selectedTextColor: Colors.white,
+              dateTextStyle: GoogleFonts.lato(
+                  textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey)),
+              dayTextStyle: GoogleFonts.lato(
+                  textStyle: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey)),
+              monthTextStyle: GoogleFonts.lato(
+                  textStyle: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey)),
+              onDateChange: (date) {
+                _selectedDate = date;
+              },
+            ),
           )
+        ],
+      ),
+    );
+  }
+
+  _addTaskBar() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat.yMMMMd().format(DateTime.now()),
+                style: subHeadingStyle,
+              ),
+              Text(
+                "Today",
+                style: headingStyle,
+              )
+            ],
+          ),
+          MyButton(label: "+ Add Task", ontap: null)
         ],
       ),
     );
@@ -50,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           // notifyHelper.scheduledNotification();
         },
         child: Icon(
-          Get.isDarkMode ? Icons.wb_sunny_rounded:Icons.nightlight_round,
+          Get.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
           size: 20,
           color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
