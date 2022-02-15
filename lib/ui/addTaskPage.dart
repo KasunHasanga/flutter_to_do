@@ -13,6 +13,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _noteController = TextEditingController();
+
   DateTime _selectedDate = DateTime.now();
 
   ///todo add 5 minuest to start time
@@ -28,7 +31,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
 
   //for color
-  int _selectedColor=0;
+  int _selectedColor = 0;
+
+  @override
+  void dispose() {
+    super.dispose();
+    //dispose text Controller
+    _noteController.dispose();
+    _titleController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +56,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Task",
                 style: headingStyle,
               ),
-              MyInputField(title: "Tiele", hint: "Input your Title"),
-              MyInputField(title: "Note", hint: "Input your Note"),
+              MyInputField(
+                title: "Tiele",
+                hint: "Input your Title",
+                controller: _titleController,
+              ),
+              MyInputField(
+                title: "Note",
+                hint: "Input your Note",
+                controller: _noteController,
+              ),
               MyInputField(
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -94,7 +113,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 title: "Remind",
                 hint: "$_selectedRemind minutes early",
                 widget: DropdownButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_down,
                     color: Colors.grey,
                   ),
@@ -156,12 +175,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment:CrossAxisAlignment.center ,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _colorPallete(),
-                  MyButton(label: "Create Task", ontap: (){
-
-                  })
+                  MyButton(
+                      label: "Create Task",
+                      ontap: () {
+                        _validateData();
+                      })
                 ],
               ),
               SizedBox(
@@ -173,7 +194,21 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ),
     );
   }
-_colorPallete(){
+
+  _validateData() {
+    if (_noteController.text.isNotEmpty && _titleController.text.isNotEmpty) {
+      //add to database
+      Get.back();
+    } else if (_noteController.text.isEmpty || _titleController.text.isEmpty) {
+      Get.snackbar("Required", "All fields are required",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: pinkClr,
+          icon: Icon(Icons.warning,color: pinkClr,));
+    }
+  }
+
+  _colorPallete() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -181,21 +216,33 @@ _colorPallete(){
           "Color",
           style: titleStyle,
         ),
-        SizedBox(height: 8.0,),
+        SizedBox(
+          height: 8.0,
+        ),
         Wrap(
           children: List<Widget>.generate(3, (index) {
             return GestureDetector(
-              onTap: (){
+              onTap: () {
                 setState(() {
-                  _selectedColor =index;
+                  _selectedColor = index;
                 });
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(
                   radius: 14,
-                  backgroundColor: index==0?primryClr:index==1?pinkClr:yelloClr,
-                  child: (index== _selectedColor )?Icon(Icons.done,color: Colors.white,size: 16,):Container(),
+                  backgroundColor: index == 0
+                      ? primryClr
+                      : index == 1
+                          ? pinkClr
+                          : yelloClr,
+                  child: (index == _selectedColor)
+                      ? const Icon(
+                          Icons.done,
+                          color: Colors.white,
+                          size: 16,
+                        )
+                      : Container(),
                 ),
               ),
             );
@@ -203,7 +250,8 @@ _colorPallete(){
         )
       ],
     );
-}
+  }
+
   _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.backgroundColor,
