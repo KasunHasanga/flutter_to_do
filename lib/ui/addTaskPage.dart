@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_app/controllers/task_controller.dart';
+import 'package:to_do_app/models/task.dart';
 import 'package:to_do_app/ui/theme.dart';
 import 'package:to_do_app/ui/widgets/buttons.dart';
 import 'package:to_do_app/ui/widgets/input_field.dart';
@@ -13,6 +15,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  //declare getX TaskController
+  final TaskController _taskController =Get.put(TaskController());
+
   TextEditingController _titleController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
 
@@ -197,15 +202,32 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   _validateData() {
     if (_noteController.text.isNotEmpty && _titleController.text.isNotEmpty) {
-      //add to database
+      _addTaskToDB();
       Get.back();
     } else if (_noteController.text.isEmpty || _titleController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: pinkClr,
-          icon: Icon(Icons.warning,color: pinkClr,));
+          icon: const Icon(
+            Icons.warning,
+            color: pinkClr,
+          ));
     }
+  }
+
+  _addTaskToDB()async {
+  int valueOfLastRaw=  await _taskController.addTask(task:Task(
+        title: _titleController.text,
+        note: _noteController.text,
+        isCompleted: 0,
+        date: DateFormat.yMd().format(_selectedDate),
+        startTime: _startTime,
+        endTime: _endTime,
+        color: _selectedColor,
+        remind: _selectedRemind,
+        repeat: _selectedRepeat));
+  print("My valueOfLastRaw is $valueOfLastRaw");
   }
 
   _colorPallete() {
