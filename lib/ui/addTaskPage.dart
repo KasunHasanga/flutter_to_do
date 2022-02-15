@@ -62,7 +62,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 style: headingStyle,
               ),
               MyInputField(
-                title: "Tiele",
+                title: "Title",
                 hint: "Input your Title",
                 controller: _titleController,
               ),
