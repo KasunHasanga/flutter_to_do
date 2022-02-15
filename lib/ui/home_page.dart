@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_app/controllers/task_controller.dart';
 
 import 'package:to_do_app/services/notification_services.dart';
 import 'package:to_do_app/services/theme_services.dart';
@@ -19,10 +20,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDate = DateTime.now();
+  //declare getX TaskController
+  final _taskController = Get.put(TaskController());
   var notifyHelper;
   @override
   void initState() {
     super.initState();
+    _taskController.getTasks();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
   }
@@ -33,9 +37,31 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
       body: Column(
-        children: [_addTaskBar(), _addDateBar()],
+        children: [
+          _addTaskBar(),
+          _addDateBar(),
+          const SizedBox(height: 10,),
+          _showTasks(),
+        ],
       ),
     );
+  }
+
+  _showTasks() {
+    return Expanded(child: Obx(() {
+      return ListView.builder(
+        itemCount: _taskController.taskList.length,
+        itemBuilder: (_, index) {
+          return Container(
+            width: 100,
+            height: 50,
+            color: Colors.grey,
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Text(_taskController.taskList[index].title.toString()),
+          );
+        },
+      );
+    }));
   }
 
   _addDateBar() {
@@ -83,7 +109,12 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          MyButton(label: "+ Add Task", ontap: () => Get.to(AddTaskPage()))
+          MyButton(
+              label: "+ Add Task",
+              ontap: () async {
+                await Get.to(() => AddTaskPage());
+                _taskController.getTasks();
+              })
         ],
       ),
     );

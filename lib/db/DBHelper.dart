@@ -8,6 +8,7 @@ class DBHelper {
 
   static Future<void> initDb() async {
     if (_db != null) {
+      print("check database has initilized");
       return;
     }
     try {
@@ -36,5 +37,10 @@ class DBHelper {
   static Future<int> insert(Task? task) async{
     print("Insert Function calling");
     return await _db?.insert(_tableName, task!.toJson())??1;
+  }
+
+  static Future<List<Map<String,dynamic>>> query() async{
+    print("Query Function called");
+    return await _db!.query(_tableName);
   }
 }
