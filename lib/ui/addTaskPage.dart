@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/ui/theme.dart';
+import 'package:to_do_app/ui/widgets/buttons.dart';
 import 'package:to_do_app/ui/widgets/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -19,19 +20,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
 
   //for reminder
-  int _selectedRemind =5;
-  List<int> remindList=[
-    5,10,15,20
-  ];
-  
+  int _selectedRemind = 5;
+  List<int> remindList = [5, 10, 15, 20];
+
   //for repeat
-  String _selectedRepeat="None";
-  List<String> repeatList=[
-    "None",
-  "Daily",
-  "Weekly",
-  "Monthly"
-  ];
+  String _selectedRepeat = "None";
+  List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
+
+  //for color
+  int _selectedColor=0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,53 +90,120 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   )
                 ],
               ),
-              MyInputField(title: "Remind",
+              MyInputField(
+                title: "Remind",
                 hint: "$_selectedRemind minutes early",
                 widget: DropdownButton(
-                  icon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.grey,
+                  ),
                   iconSize: 32,
                   elevation: 4,
                   style: subTitleStyle,
-                  underline: Container(height: 0,),
-                  items: remindList.map<DropdownMenuItem<String>>((int value){
+                  underline: Container(
+                    height: 0,
+                  ),
+                  items: remindList.map<DropdownMenuItem<String>>((int value) {
                     return DropdownMenuItem<String>(
                       value: value.toString(),
-                      child: Text(value.toString(),style: TextStyle(color: Colors.grey),),
+                      child: Text(
+                        value.toString(),
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     );
                   }).toList(),
                   onChanged: (String? value) {
                     setState(() {
-                      _selectedRemind =int.parse(value!);
+                      _selectedRemind = int.parse(value!);
                     });
                   },
-                ),),
-              MyInputField(title: "Repeat",
+                ),
+              ),
+              MyInputField(
+                title: "Repeat",
                 hint: _selectedRepeat,
                 widget: DropdownButton(
-                  icon: const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.grey,
+                  ),
                   iconSize: 32,
                   elevation: 4,
                   style: subTitleStyle,
-                  underline: Container(height: 0,),
-                  items: repeatList.map<DropdownMenuItem<String>>((String value){
+                  underline: Container(
+                    height: 0,
+                  ),
+                  items:
+                      repeatList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value,style: TextStyle(color: Colors.grey),),
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     );
                   }).toList(),
                   onChanged: (String? value) {
                     setState(() {
-                      _selectedRepeat =value!;
+                      _selectedRepeat = value!;
                     });
                   },
-                ),),
+                ),
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment:CrossAxisAlignment.center ,
+                children: [
+                  _colorPallete(),
+                  MyButton(label: "Create Task", ontap: (){
+
+                  })
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
+_colorPallete(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Color",
+          style: titleStyle,
+        ),
+        SizedBox(height: 8.0,),
+        Wrap(
+          children: List<Widget>.generate(3, (index) {
+            return GestureDetector(
+              onTap: (){
+                setState(() {
+                  _selectedColor =index;
+                });
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor: index==0?primryClr:index==1?pinkClr:yelloClr,
+                  child: (index== _selectedColor )?Icon(Icons.done,color: Colors.white,size: 16,):Container(),
+                ),
+              ),
+            );
+          }),
+        )
+      ],
+    );
+}
   _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.backgroundColor,
