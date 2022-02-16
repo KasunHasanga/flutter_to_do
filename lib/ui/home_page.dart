@@ -1,4 +1,5 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,7 @@ import 'package:to_do_app/services/theme_services.dart';
 import 'package:to_do_app/ui/addTaskPage.dart';
 import 'package:to_do_app/ui/theme.dart';
 import 'package:to_do_app/ui/widgets/buttons.dart';
+import 'package:to_do_app/ui/widgets/task_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -52,13 +54,23 @@ class _HomePageState extends State<HomePage> {
       return ListView.builder(
         itemCount: _taskController.taskList.length,
         itemBuilder: (_, index) {
-          return Container(
-            width: 100,
-            height: 50,
-            color: Colors.grey,
-            margin: const EdgeInsets.only(bottom: 10),
-            child: Text(_taskController.taskList[index].title.toString()),
-          );
+          return AnimationConfiguration.staggeredGrid(
+              position: index,
+              columnCount: _taskController.taskList.length,
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          print("taskController.taskList.");
+                        },
+                        child: TaskTile(_taskController.taskList[index]),
+                      )
+                    ],
+                  ),
+                ),
+              ));
         },
       );
     }));
