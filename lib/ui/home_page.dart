@@ -112,6 +112,8 @@ class _HomePageState extends State<HomePage> {
               clr: Colors.red[300]!,
               label: "Delete Task",
               onTap: () {
+                _taskController.delete(task);
+                _taskController.getTasks();
                 Get.back();
               }),
           const SizedBox(
@@ -140,7 +142,9 @@ class _HomePageState extends State<HomePage> {
       bool isClosed = false,
       required BuildContext context}) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: (){
+        onTap();
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         child: Center(
