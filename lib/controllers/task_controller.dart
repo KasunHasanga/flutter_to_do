@@ -22,6 +22,12 @@ class TaskController extends GetxController {
   }
 
   void delete(Task task) async {
-    DBHelper.delete(task);
+    await DBHelper.delete(task);
+    getTasks();
+  }
+
+  void markTaskIsCompleted(int id) async {
+    await DBHelper.update(id);
+    getTasks();
   }
 }

@@ -105,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                   clr: primryClr,
                   label: "Task Completed",
                   onTap: () {
+                    _taskController.markTaskIsCompleted(task.id!);
                     Get.back();
                   }),
           _bottomSheetButton(
@@ -113,7 +114,6 @@ class _HomePageState extends State<HomePage> {
               label: "Delete Task",
               onTap: () {
                 _taskController.delete(task);
-                _taskController.getTasks();
                 Get.back();
               }),
           const SizedBox(
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
       bool isClosed = false,
       required BuildContext context}) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         onTap();
       },
       child: Container(

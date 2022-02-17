@@ -48,4 +48,15 @@ class DBHelper {
     print("Delete Query called");
     await _db!.delete(_tableName,where:'id=?',whereArgs: [task.id] );
   }
+
+  static update(int id) async{
+    print("Update Query called");
+   return await _db!.rawUpdate(
+      '''
+      UPDATE $_tableName
+      SET isCompleted =?
+      WHERE id=?
+      ''',[1,id]
+    );
+  }
 }
