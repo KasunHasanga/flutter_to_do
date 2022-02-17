@@ -57,24 +57,30 @@ class _HomePageState extends State<HomePage> {
       return ListView.builder(
         itemCount: _taskController.taskList.length,
         itemBuilder: (_, index) {
-          return AnimationConfiguration.staggeredGrid(
-              position: index,
-              columnCount: _taskController.taskList.length,
-              child: SlideAnimation(
-                child: FadeInAnimation(
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _showBottomSheet(
-                              context, _taskController.taskList[index]);
-                        },
-                        child: TaskTile(_taskController.taskList[index]),
-                      )
-                    ],
+          Task task = _taskController.taskList[index];
+          if (task.repeat=="Daily" ||DateFormat.yMd().format(_selectedDate)==task.date){
+            return AnimationConfiguration.staggeredGrid(
+                position: index,
+                columnCount: _taskController.taskList.length,
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _showBottomSheet(
+                                context, task);
+                          },
+                          child: TaskTile(task),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ));
+                ));
+          }
+          else{
+            return Container();
+          }
         },
       );
     }));
@@ -190,7 +196,9 @@ class _HomePageState extends State<HomePage> {
             textStyle: const TextStyle(
                 fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey)),
         onDateChange: (date) {
-          _selectedDate = date;
+          setState(() {
+            _selectedDate = date;
+          });
         },
       ),
     );
