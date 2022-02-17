@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/controllers/task_controller.dart';
+import 'package:to_do_app/models/task.dart';
 
 import 'package:to_do_app/services/notification_services.dart';
 import 'package:to_do_app/services/theme_services.dart';
@@ -42,7 +43,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           _showTasks(),
         ],
       ),
@@ -62,8 +65,9 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          print("taskController.taskList.");
+                        onTap: () {
+                          _showBottomSheet(
+                              context, _taskController.taskList[index]);
                         },
                         child: TaskTile(_taskController.taskList[index]),
                       )
@@ -74,6 +78,92 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }));
+  }
+
+  _showBottomSheet(BuildContext context, Task task) {
+    return Get.bottomSheet(Container(
+      padding: const EdgeInsets.only(top: 4),
+      height: task.isCompleted == 1
+          ? MediaQuery.of(context).size.height * 0.24
+          : MediaQuery.of(context).size.height * 0.32,
+      color: Get.isDarkMode ? darkGrayClr : Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 6,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
+            ),
+          ),
+          const Spacer(),
+          task.isCompleted == 1
+              ? Container()
+              : _bottomSheetButton(
+                  context: context,
+                  clr: primryClr,
+                  label: "Task Completed",
+                  onTap: () {
+                    Get.back();
+                  }),
+          _bottomSheetButton(
+              context: context,
+              clr: Colors.red[300]!,
+              label: "Delete Task",
+              onTap: () {
+                Get.back();
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          _bottomSheetButton(
+              context: context,
+              isClosed: true,
+              clr: Colors.transparent,
+              label: "Close",
+              onTap: () {
+                Get.back();
+              }),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    ));
+  }
+
+  _bottomSheetButton(
+      {required String label,
+      required Function onTap,
+      required Color clr,
+      bool isClosed = false,
+      required BuildContext context}) {
+    return GestureDetector(
+      onTap: () => onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        child: Center(
+            child: Text(
+          label,
+          style:
+              isClosed ? titleStyle : titleStyle.copyWith(color: Colors.white),
+        )),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        // color:isClosed==true?Colors.red:clr ,
+        decoration: BoxDecoration(
+            color: isClosed == true ? Colors.transparent : clr,
+            border: Border.all(
+                width: 2,
+                color: isClosed == true
+                    ? Get.isDarkMode
+                        ? Colors.grey[600]!
+                        : Colors.grey[300]!
+                    : clr),
+            borderRadius: BorderRadius.circular(20)),
+      ),
+    );
   }
 
   _addDateBar() {
