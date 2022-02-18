@@ -43,6 +43,7 @@ dependencies:
   date_picker_timeline:
   sqflite:
   flutter_staggered_animations:
+  flutter_spinkit:
 
 dev_dependencies:
   flutter_test:
