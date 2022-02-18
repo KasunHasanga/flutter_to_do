@@ -58,7 +58,14 @@ class _HomePageState extends State<HomePage> {
         itemCount: _taskController.taskList.length,
         itemBuilder: (_, index) {
           Task task = _taskController.taskList[index];
-          if (task.repeat=="Daily" ||DateFormat.yMd().format(_selectedDate)==task.date){
+
+          DateTime date = DateFormat.jm().parse(task.startTime.toString());
+          var myTime = DateFormat("HH:mm").format(date);
+          notifyHelper.scheduledNotification(
+              int.parse(myTime.toString().split(":")[0]),
+              int.parse(myTime.toString().split(":")[1]),
+              task);
+          if (task.repeat == "Daily") {
             return AnimationConfiguration.staggeredGrid(
                 position: index,
                 columnCount: _taskController.taskList.length,
@@ -68,8 +75,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            _showBottomSheet(
-                                context, task);
+                            _showBottomSheet(context, task);
                           },
                           child: TaskTile(task),
                         )
@@ -77,8 +83,25 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ));
-          }
-          else{
+          } else if (DateFormat.yMd().format(_selectedDate) == task.date) {
+            return AnimationConfiguration.staggeredGrid(
+                position: index,
+                columnCount: _taskController.taskList.length,
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _showBottomSheet(context, task);
+                          },
+                          child: TaskTile(task),
+                        )
+                      ],
+                    ),
+                  ),
+                ));
+          } else {
             return Container();
           }
         },
