@@ -34,6 +34,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ListTile(
             title: Text('All Tasks'),
             onTap: () {
+              Get.back();
               Get.to(() => ShowAllTasks());
             },
           ),
