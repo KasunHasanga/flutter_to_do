@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:to_do_app/models/task.dart';
+import 'package:to_do_app/ui/notified_page.dart';
 
 class NotifyHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -75,7 +76,8 @@ class NotifyHelper {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+        matchDateTimeComponents: DateTimeComponents.time,
+        payload: "${task.title} | ${task.note} |");
   }
 
   tz.TZDateTime _convertedTime(int hour, int minutes) {
@@ -108,7 +110,6 @@ class NotifyHelper {
       title,
       body,
       platformChannelSpecifics,
-      payload: 'Default_Sound',
     );
   }
 
@@ -125,13 +126,12 @@ class NotifyHelper {
 //   }
 
   Future selectNotification(String? payload) async {
-    if (payload != null) {
+    if (payload != null &&payload.toString().isNotEmpty) {
       print('notification payload: $payload');
+      Get.to(() => NotifiedPage(label: payload.toString(),));
     } else {
       print("Notification Done");
     }
-    Get.to(() => Container(
-          color: Colors.white,
-        ));
+
   }
 }
