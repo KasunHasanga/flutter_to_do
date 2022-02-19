@@ -12,6 +12,7 @@ import 'package:to_do_app/services/theme_services.dart';
 import 'package:to_do_app/ui/addTaskPage.dart';
 import 'package:to_do_app/ui/theme.dart';
 import 'package:to_do_app/ui/widgets/buttons.dart';
+import 'package:to_do_app/ui/widgets/drawer.dart';
 import 'package:to_do_app/ui/widgets/task_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   DateTime _selectedDate = DateTime.now();
   //declare getX TaskController
   final _taskController = Get.put(TaskController());
@@ -37,8 +40,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
+      drawer: MyDrawer(),
       body: Column(
         children: [
           _addTaskBar(),
@@ -259,28 +264,37 @@ class _HomePageState extends State<HomePage> {
 
   _appBar() {
     return AppBar(
+      // automaticallyImplyLeading: false,
       backgroundColor: context.theme.backgroundColor,
       elevation: 0,
-      leading: GestureDetector(
-        onTap: () {
-          ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-              title: "Theme Changed",
-              body: Get.isDarkMode
-                  ? "Activated Light Mode"
-                  : "Activated Dark Mode");
-          // notifyHelper.scheduledNotification();
+      leading: IconButton(
+        icon: const Icon(Icons.menu),
+        color: Get.isDarkMode ? Colors.white : Colors.black,
+        onPressed: () {
+          _scaffoldKey.currentState?.openDrawer();
         },
-        child: Icon(
-          Get.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
-          size: 20,
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpeg"),
+
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            ThemeServices().switchTheme();
+            notifyHelper.displayNotification(
+                title: "Theme Changed",
+                body: Get.isDarkMode
+                    ? "Activated Light Mode"
+                    : "Activated Dark Mode");
+            // notifyHelper.scheduledNotification();
+          },
+          child: Icon(
+            Get.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+            size: 20,
+            color: Get.isDarkMode ? Colors.white : Colors.black,
+          ),
         ),
+        // CircleAvatar(
+        //   backgroundImage: AssetImage("images/profile.jpeg"),
+        // ),
         SizedBox(
           width: 20,
         )
