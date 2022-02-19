@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_do_app/services/auth_services.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -22,15 +23,16 @@ class _SecurityPageState extends State<SecurityPage> {
       isUserHasEnableAuth = AuthServices().getIsUserNeedAuthenticate;
     });
 
-    print(isUserHasEnableAuth.toString() + "isUserHasEnableAuth");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Security"),
-      ),
+      backgroundColor: context.theme.backgroundColor,
+      appBar: _appBar(context),
+      // appBar: AppBar(
+      //   title: Text("Security"),
+      // ),
       body: Container(
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
@@ -67,7 +69,6 @@ class _SecurityPageState extends State<SecurityPage> {
                               AuthServices()
                                   .saveToLocalAuthToBox(isAuthOn: false);
                             }
-                            print('switched to: $index');
                           },
                         ),
                       ],
@@ -83,6 +84,24 @@ class _SecurityPageState extends State<SecurityPage> {
           ],
         ),
       ),
+    );
+  }
+  _appBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: context.theme.backgroundColor,
+      elevation: 0,
+      title: Text("Security"),
+      leading: GestureDetector(
+        onTap: () {
+Get.back();
+        },
+        child: Icon(
+          Icons.arrow_back,
+          size: 20,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
+        ),
+      ),
+
     );
   }
 }

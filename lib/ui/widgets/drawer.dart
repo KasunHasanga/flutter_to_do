@@ -5,6 +5,7 @@ import 'package:to_do_app/services/theme_services.dart';
 import 'package:to_do_app/ui/all_tasks.dart';
 import 'package:to_do_app/ui/drawer/pin_login.dart';
 import 'package:to_do_app/ui/splashScreen.dart';
+import 'package:to_do_app/ui/widgets/buttons.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -13,12 +14,7 @@ class MyDrawer extends StatefulWidget {
   _MyDrawerState createState() => _MyDrawerState();
 }
 
-
 class _MyDrawerState extends State<MyDrawer> {
-
-
-
-
   var notifyHelper = NotifyHelper();
   @override
   Widget build(BuildContext context) {
@@ -32,38 +28,33 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             child: Text('Drawer Header'),
           ),
-
           ListTile(
             title: Text('All Tasks'),
             onTap: () {
               Get.back();
               Get.to(() => ShowAllTasks());
             },
-          ),ListTile(
+          ),
+          ListTile(
             title: Text('Security'),
             onTap: () {
               Get.back();
               Get.to(() => SecurityPage());
             },
-          ),ListTile(
-            title: buildLogoutButton(context),
+          ),
 
+          ListTile(
+            title:  MyButton(
+                label: "Log Out",
+              ontap: (){
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => SplashScreen()));
+              },
+                ),
           ),
         ],
       ),
     );
   }
 
-  Widget buildLogoutButton(BuildContext context) => ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      minimumSize: Size.fromHeight(50),
-    ),
-    child: Text(
-      'Logout',
-      style: TextStyle(fontSize: 20),
-    ),
-    onPressed: () => Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => SplashScreen()),
-    ),
-  );
 }

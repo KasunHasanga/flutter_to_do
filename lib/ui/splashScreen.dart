@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:to_do_app/db/DBHelper.dart';
 import 'package:to_do_app/services/auth_services.dart';
@@ -31,7 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
       isBiometricAdd = AuthServices().getIsUserNeedAuthenticate;
     });
 
-    print(isBiometricAdd);
     if (isBiometricAdd == false) {
       Timer(Duration(seconds: 2), () {
         Navigator.pushReplacement(context,
