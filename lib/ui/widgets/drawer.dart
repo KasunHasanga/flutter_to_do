@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:to_do_app/services/notification_services.dart';
 import 'package:to_do_app/services/theme_services.dart';
 import 'package:to_do_app/ui/all_tasks.dart';
+import 'package:to_do_app/ui/drawer/pin_login.dart';
+import 'package:to_do_app/ui/splashScreen.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -37,9 +39,31 @@ class _MyDrawerState extends State<MyDrawer> {
               Get.back();
               Get.to(() => ShowAllTasks());
             },
+          ),ListTile(
+            title: Text('Security'),
+            onTap: () {
+              Get.back();
+              Get.to(() => SecurityPage());
+            },
+          ),ListTile(
+            title: buildLogoutButton(context),
+
           ),
         ],
       ),
     );
   }
+
+  Widget buildLogoutButton(BuildContext context) => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      minimumSize: Size.fromHeight(50),
+    ),
+    child: Text(
+      'Logout',
+      style: TextStyle(fontSize: 20),
+    ),
+    onPressed: () => Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => SplashScreen()),
+    ),
+  );
 }

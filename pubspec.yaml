@@ -44,6 +44,8 @@ dependencies:
   sqflite:
   flutter_staggered_animations:
   flutter_spinkit:
+  local_auth:
+  toggle_switch : ^1.4.0
 
 dev_dependencies:
   flutter_test:
