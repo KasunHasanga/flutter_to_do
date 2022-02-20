@@ -45,17 +45,21 @@ class _HomePageState extends State<HomePage> {
       appBar: _appBar(),
       drawer: MyDrawer(),
       body: Column(
+
         children: [
           _addTaskBar(),
           _addDateBar(),
           const SizedBox(
             height: 10,
           ),
-          _showTasks(),
+          // (_taskController.taskList.length>0)?
+          _showTasks()
         ],
       ),
     );
   }
+
+
 
   _showTasks() {
     return Expanded(child: Obx(() {

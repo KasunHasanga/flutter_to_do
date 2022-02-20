@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:to_do_app/controllers/task_controller.dart';
 import 'package:to_do_app/models/task.dart';
 import 'package:to_do_app/ui/theme.dart';
+import 'package:to_do_app/ui/widgets/emptyPage.dart';
 import 'package:to_do_app/ui/widgets/task_tile.dart';
 
 class ShowAllTasks extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ShowAllTasksState extends State<ShowAllTasks> {
     return Scaffold(
       appBar: _appBar(context),
       backgroundColor: context.theme.backgroundColor,
-      body: Container(
+      body:( _taskController.taskList.isNotEmpty )?Container(
         padding: EdgeInsets.only(top: 10, bottom: 10),
         height: MediaQuery.of(context).size.height,
         child: Obx(() {
@@ -49,7 +50,7 @@ class _ShowAllTasksState extends State<ShowAllTasks> {
             },
           );
         }),
-      ),
+      ):EmptyPage(),
     );
   }
 
