@@ -52,7 +52,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(context),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +75,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
-                  icon: Icon(Icons.calendar_today_outlined),
+                  icon: const Icon(Icons.calendar_today_outlined),
                   color: Colors.grey,
                   onPressed: () {
                     _getDateFromUser();
@@ -89,14 +89,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     title: "Start Time",
                     hint: _startTime,
                     widget: IconButton(
-                      icon: Icon(Icons.access_time_rounded),
+                      icon: const Icon(Icons.access_time_rounded),
                       color: Colors.grey,
                       onPressed: () {
                         _getTimeFormUser(isStartTime: true);
                       },
                     ),
                   )),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -104,7 +104,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       title: "End Time",
                       hint: _endTime,
                       widget: IconButton(
-                        icon: Icon(Icons.access_time_rounded),
+                        icon: const Icon(Icons.access_time_rounded),
                         color: Colors.grey,
                         onPressed: () {
                           _getTimeFormUser(isStartTime: false);
@@ -133,7 +133,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       value: value.toString(),
                       child: Text(
                         value.toString(),
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     );
                   }).toList(),
@@ -164,7 +164,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       value: value,
                       child: Text(
                         value,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     );
                   }).toList(),
@@ -175,7 +175,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Row(
@@ -190,7 +190,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       })
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
             ],
@@ -238,7 +238,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           "Color",
           style: titleStyle,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8.0,
         ),
         Wrap(
@@ -250,7 +250,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 });
               },
               child: Padding(
-                padding: EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(
                   radius: 14,
                   backgroundColor: index == 0

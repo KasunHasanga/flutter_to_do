@@ -14,7 +14,7 @@ class NotifiedPage extends StatelessWidget {
         backgroundColor: Get.isDarkMode ? darkGrayClr: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Get.back(),
           color:Get.isDarkMode ? Colors.white : Colors.black,
         ),

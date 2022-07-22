@@ -3,7 +3,7 @@ import 'package:to_do_app/models/task.dart';
 
 class DBHelper {
   static Database? _db;
-  static final int _version = 1;
+  static const int _version = 1;
   static String _tableName = "tasks";
 
   static Future<void> initDb() async {
