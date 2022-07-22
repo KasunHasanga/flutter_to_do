@@ -1,5 +1,5 @@
+// ignore: file_names
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -31,9 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     if (isBiometricAdd == false) {
-      Timer(Duration(seconds: 2), () {
+      Timer(const Duration(seconds: 2), () {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+            MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
       });
     } else {}
     // Timer(Duration(seconds: 2), () {
@@ -48,16 +48,16 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.done_outline_rounded,
             color: bluishClr,
             size: 100,
           ),
           isBiometricAdd == true ? buildAuthenticate(context) : Container(),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          SpinKitFadingCircle(
+          const SpinKitFadingCircle(
             color: Colors.black,
           )
         ],
@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => HomePage()));
+                    builder: (BuildContext context) => const HomePage()));
           }
         },
       );
@@ -86,12 +86,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }) =>
       ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          minimumSize: Size.fromHeight(50),
+          minimumSize: const Size.fromHeight(50),
         ),
         icon: Icon(icon, size: 26),
         label: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         onPressed: onClicked,
       );

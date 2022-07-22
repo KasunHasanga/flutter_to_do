@@ -34,7 +34,7 @@ class _SecurityPageState extends State<SecurityPage> {
       //   title: Text("Security"),
       // ),
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,7 +45,7 @@ class _SecurityPageState extends State<SecurityPage> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Set Up Fingerprint"),
+                        const Text("Set Up Fingerprint"),
                         ToggleSwitch(
                           minWidth: 90.0,
                           cornerRadius: 20.0,
@@ -74,11 +74,11 @@ class _SecurityPageState extends State<SecurityPage> {
                       ],
                     );
                   } else {
-                    return Text(
+                    return const Text(
                         "Sorry your device haven\`t support to fingerprint");
                   }
                 }),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
           ],
@@ -90,7 +90,7 @@ class _SecurityPageState extends State<SecurityPage> {
     return AppBar(
       backgroundColor: context.theme.backgroundColor,
       elevation: 0,
-      title: Text("Security"),
+      title: const Text("Security"),
       leading: GestureDetector(
         onTap: () {
 Get.back();

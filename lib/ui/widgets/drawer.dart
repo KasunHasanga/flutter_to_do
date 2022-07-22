@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_app/services/notification_services.dart';
-import 'package:to_do_app/services/theme_services.dart';
 import 'package:to_do_app/ui/all_tasks.dart';
 import 'package:to_do_app/ui/drawer/pin_login.dart';
 import 'package:to_do_app/ui/splashScreen.dart';
@@ -29,17 +28,17 @@ class _MyDrawerState extends State<MyDrawer> {
             child: Text('Drawer Header'),
           ),
           ListTile(
-            title: Text('All Tasks'),
+            title: const Text('All Tasks'),
             onTap: () {
               Get.back();
-              Get.to(() => ShowAllTasks());
+              Get.to(() => const ShowAllTasks());
             },
           ),
           ListTile(
-            title: Text('Security'),
+            title: const Text('Security'),
             onTap: () {
               Get.back();
-              Get.to(() => SecurityPage());
+              Get.to(() => const SecurityPage());
             },
           ),
 
@@ -48,7 +47,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 label: "Log Out",
               ontap: (){
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => SplashScreen()));
+                    MaterialPageRoute(builder: (context) => const SplashScreen()));
               },
                 ),
           ),

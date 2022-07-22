@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
 
   DateTime _selectedDate = DateTime.now();
   //declare getX TaskController
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: Column(
         children: [
           _addTaskBar(),
@@ -254,7 +254,7 @@ class _HomePageState extends State<HomePage> {
           MyButton(
               label: "+ Add Task",
               ontap: () async {
-                await Get.to(() => AddTaskPage());
+                await Get.to(() => const AddTaskPage());
                 _taskController.getTasks();
               })
         ],
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
         // CircleAvatar(
         //   backgroundImage: AssetImage("images/profile.jpeg"),
         // ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         )
       ],
